@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <title>小脑瓜</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="像小脑控制身体一样写代码！记录工作中一些技术的使用和原理，方便快速的查看以及复用~">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="shortcut icon" type="image/x-icon" href="logo.png">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+</head>
+<body>
+<div id="app">加载中...</div>
+
+<!-- UI逐渐显现 -->
+<style type="text/css">
+  body{opacity: 0.01; transition: opacity 0.5s; background-color: #FFF;}
+</style>
+<script type="text/javascript">
+  setTimeout(function() {
+    document.body.style.opacity = 1;
+  }, 1);
+</script>
+
+<script>
+  window.$docsify = {
+    name: 'Cerebellum',
+    nameLink: '/',
+    routerMode: 'history',
+    repo: 'https://github.com/dromara/sa-token',
+    themeColor: '#06A3D7',
+    auto2top: true, // 是否在切换页面后回到顶部
+    subMaxLevel: 2, // 标题解析层级, 写几就在目录树中解析到几级标题
+    loadSidebar: true, // 加载自定义侧边栏
+    alias: {
+      '/.*/_sidebar.md': '/_sidebar.md'
+    }
+  }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
+</body>
+</html>
