@@ -20,10 +20,10 @@ echo $SHELL
 # 使用sh解析器执行
 sh test.sh
 
-# 使用bash接线器执行
+# 使用bash解析器执行
 bash test.sh
 
-# 自己执行文件，文件需要有执行权限(chmod +x test.sh)
+# 执行文件，文件需要有执行权限(chmod +x test.sh)
 ./test.sh
 ```
 
@@ -47,7 +47,7 @@ bash test.sh
  # 声明静态变量 readonly 变量名=值，（注意：不能unset撤销，会报错）
  readonly A=2
  
- # export 变量名，提升变量为全局环境变量，在命令行使用可供其他Shell程序使用；在shell脚本中使用，只能在当前脚本中生效
+ # export 变量名，提升变量为全局环境变量，在命令行使用当前bash生效（关闭当前shell终端失效）；在shell脚本中使用，只能在当前脚本中生效
  export A
  ```
 

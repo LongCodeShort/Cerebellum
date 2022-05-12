@@ -1,4 +1,14 @@
-### Read：读取控制台输入
+### help：查看当前函数的用法
+
+- 基本语法：`函数 --help`
+
+```shell
+cut --help
+```
+
+------
+
+### read：读取控制台输入
 
 - 基本语法：`read [选项][变量]`
 - 选项：
@@ -39,3 +49,46 @@ dirname /home/longcodeshort/
 dirname /home
 ```
 ------
+
+### cut：从文件中每一行剪切字节、字符和字段并将剪切的内容输出
+
+- 基本语法：`cut [选项] 文件名`
+- 选项：
+  1. `-f`：列号，指定提取分割后的第几列
+  2. `-d`：指定分隔符（默认分隔符为制表符）
+  3. `-b`：以字节单位为进行分割，指定字节的位数或者区间（切割的字节会自动从前到后排序输出）
+
+```shell
+# 测试数据 test.txt
+dong shen
+guan zhen
+wo  wo
+lai  lai
+le  le1
+
+# 获取第一列数据
+cut -d ' ' -f 1 test.txt
+dong
+guan
+wo
+lai
+le
+
+# 获取二三列数据
+cut -d ' ' -f 2,3 test.txt
+shen
+zhen
+ wo
+ lai
+ le1
+
+# 获取'guan'
+cut -b 1-4 test.txt | grep guan
+
+# 选取系统变量PATH第二个“:”后的所有路径
+echo $PATH | cut -d : -f 2-
+
+# 获取ifconfig中docker0网卡的IP地址
+ifconfig docker0 | grep "inet" | cut -d ' ' -f 10
+```
+
