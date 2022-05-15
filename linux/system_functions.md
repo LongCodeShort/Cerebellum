@@ -1,9 +1,10 @@
 ### help：查看当前函数的用法
 
-- 基本语法：`函数 --help`
+- 基本语法：`函数 --help`  或 `help 函数`
 
 ```shell
 cut --help
+help cd
 ```
 
 ------
@@ -90,5 +91,93 @@ echo $PATH | cut -d : -f 2-
 
 # 获取ifconfig中docker0网卡的IP地址
 ifconfig docker0 | grep "inet" | cut -d ' ' -f 10
+```
+
+------
+
+### grep：文本过滤工具
+
+基本语法：`grep [选项] 文件名`
+
+- 选项：
+- `-E`：支持扩展正则（等价于`egrep`）
+- `-An`：匹配到内容后显示匹配的内容和匹配内容下面的n行(after)
+- `-Bn`：匹配到内容后显示匹配的内容和匹配内容上面的n行(before)
+- `-Cn`：匹配到内容后显示匹配的内容和匹配内容上下的n行(context)
+- `-c`：显示匹配到的的行数（效果等效于`wc -l`）
+- `-v`：排除掉匹配的行
+- `-n`：显示行号
+- `-i`：忽略大小写
+- `-w`：精确匹配
+- `-o`：只显示匹配到的字符串，每个字符串显示时占一行
+
+```shell
+# 精确匹配new
+echo news new | grep -w new
+echo news new | grep '\new\b'
+echo news new | grep '\<new\>'
+```
+
+
+
+### sed：文件流编辑器，一次处理一行，把当前行的内容存储在临时缓冲区（模式空间）进行处理，处理完成后把缓冲区的内容输出到标准输出，接着处理下一行，直到文件末尾，原文件默认不会改变。
+
+- 基本语法：`sed [选项] 文件名`
+- 选项：
+  1. `-e`：指定的script来处理输入的文本文件（可以省略，但是后面的脚本需要用引号包含）
+  2. `-f`：指定的script文件来处理输入的文本文件
+  3. `-n`：仅显示处理后的结果
+  4. `-i`：是当前修改作用于原文件
+- 脚本动作：
+  1. `a\`： 在当前行后面加入一行指定文本
+  2. `i\` ：在当前行上面插入一行指定文本
+  3. `d` ：从模版块删除行
+  4. `c\` ：用新的文本改变指定行的文本
+  5. `s/正则表达式/新内容/g`：用新内容替换正则表达式匹配的内容。（‘/’分隔符可以替换为其他符号；‘g’为全局替换，用于当前行多个匹配内容时全部替换）
+  6. `h`：拷贝模板块的内容到内存中的缓冲区
+  7. `p`：指定要打印的行
+  8. `q`：退出脚本
+
+```shell
+# 测试数据 test.txt
+dong shen
+guan zhen
+wo  wo
+lai  lai
+le  le1
+
+# 将'abc'插入到第2行的下一行
+sed '2a\abc' test.txt
+
+# 将'abc'插入到第2行的下一行,将'def'跟着换行插入
+sed '2a\abc\
+def' test.txt
+
+# 删除第2和第3行
+sed '2,3d' test.txt
+
+# 删除第3行到最后一行
+sed '3,$d' test.txt
+
+# 替换最后一行为'good' 
+sed '$c\good' test.txt
+
+# 搜寻字母e行并显示
+sed -n '/e/p' test.txt
+
+# 搜寻字母e的行并删除
+sed '/e/d' test.txt
+
+# 搜寻'en'并替换为'eng'
+sed 's/en/eng/' test.txt
+
+# 搜寻'o'并替换为'oo',
+sed 's|o|oo|g' test.txt
+
+# 搜寻字母u所在行并执行替换脚本，输出结果
+sed -n '/u/{s/en/eng/;p;q}' test.txt
+
+# 连续命令
+sed -e '$a\good' -e 's/o/oo/g' test.txt
 ```
 
